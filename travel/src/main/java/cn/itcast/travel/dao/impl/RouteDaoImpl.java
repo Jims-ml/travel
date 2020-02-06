@@ -5,7 +5,9 @@ import cn.itcast.travel.domain.Route;
 import cn.itcast.travel.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
 
+import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +25,11 @@ public class RouteDaoImpl implements RouteDao {
         //2.判断参数是否有值
         if(cid != 0){
             sb.append( " and cid = ? ");
-
             params.add(cid);//添加？对应的值
         }
 
-        if(rname != null && rname.length() > 0){
+        if(!"null".equals(rname) && rname.length() > 0){
             sb.append(" and rname like ? ");
-
             params.add("%"+rname+"%");
         }
 
@@ -53,10 +53,8 @@ public class RouteDaoImpl implements RouteDao {
 
             params.add(cid);//添加？对应的值
         }
-
-        if(rname != null && rname.length() > 0){
+        if(!"null".equals(rname) && rname.length() > 0){
             sb.append(" and rname like ? ");
-
             params.add("%"+rname+"%");
         }
         sb.append(" limit ? , ? ");//分页条件
